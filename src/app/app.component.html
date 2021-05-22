@@ -12,12 +12,26 @@
       provider.info
     </div>
   </div>
-  <div class="container row">
-    <div class="col-sm-2" style="background-color: black;height: 100px;width: 100px;">
+  <div class="row ml-5 mr-5">
+    <div class="container row col-sm-9 provider-card-container"> 
+          <div class="col-sm-2 col-2" *ngFor="let providerInfo of providerInfoList" class="provider-card-position">
+            <app-provider [providerInfo] = "providerInfo"></app-provider>
+          </div>
     </div>
-        <div class="col-sm-2 col-2" *ngFor="let providerInfo of providerInfoList" class="provider-card-position">
-          <app-provider [providerInfo] = "providerInfo"></app-provider>
+    <div class="container row col-sm-3 provider-order-by-container">
+      <div class="order-by-section">
+        <div class="order-by-content">
+          <div class="order-by-text"></div>
+          <div class="order-by-list">
+            <div 
+          </div>
         </div>
-  </div>
+        <div class="order-by-card">
+          <div class="order-by-background"></div>
+          <div class="order-by-border"></div>
+        </div>
+      </div>
+    </div>
+</div>
 </div>
 <router-outlet></router-outlet>
