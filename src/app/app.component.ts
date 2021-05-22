@@ -58,32 +58,32 @@ export class AppComponent {
   ];
   orderByCategories = [
     {
-      Name: "Creation Date",
-      checked: false
+      categoryName: "Creation Date",
+      categoryChecked: false
     },
     {
-      Name: "Name",
-      checked: true
+      categoryName: "Name",
+      categoryChecked: true
     },
     {
-      Name: "Business Name",
-      checked: false
+      categoryName: "Business Name",
+      categoryChecked: false
     },
     {
-      Name: "Phone Number",
-      checked: false
+      categoryName: "Phone Number",
+      categoryChecked: false
     },
     {
-      Name: "Address",
-      checked: false
+      categoryName: "Address",
+      categoryChecked: false
     },
     {
-      Name: "N.I.T.",
-      checked: false
+      categoryName: "N.I.T.",
+      categoryChecked: false
     },
     {
-      Name: "Rating",
-      checked: true
+      categoryName: "Rating",
+      categoryChecked: true
     }
   ];
   title = 'provider-front';
