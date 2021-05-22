@@ -56,5 +56,35 @@ export class AppComponent {
       providerPhoneNumber: "573112849610"
     }
   ];
+  orderByCategories = [
+    {
+      Name: "Creation Date",
+      checked: false
+    },
+    {
+      Name: "Name",
+      checked: true
+    },
+    {
+      Name: "Business Name",
+      checked: false
+    },
+    {
+      Name: "Phone Number",
+      checked: false
+    },
+    {
+      Name: "Address",
+      checked: false
+    },
+    {
+      Name: "N.I.T.",
+      checked: false
+    },
+    {
+      Name: "Rating",
+      checked: true
+    }
+  ];
   title = 'provider-front';
 }
