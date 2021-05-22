@@ -1,1 +1,14 @@
-<p>order-by-category works!</p>
+
+<div *ngIf="checked" class="checkbox-item-selected">
+    <div class="checkbox-selected" (click)="checked=!checked">
+        <div class="checkbox-rectangle-selected"></div>
+        <div class="checked-checkbox">
+            <span class="iconify" data-inline="false" data-icon="entypo:check" style="color: #e57d5d; font-size: 35px;"></span>
+        </div>
+    </div>
+    <div class="checkbox-category-selected">{{name}}</div>
+</div>
+<div *ngIf="!checked" class="checkbox-item-unselected">
+    <div class="checkbox-rectangle-unselected"  (click)="checked=!checked"></div>
+    <div class="chechbox-category-unselected">{{name}}</div>
+</div>
