@@ -1,0 +1,163 @@
+
+    /* provider-card */
+    .provider-card{
+    position: relative;
+    width: 297px;
+    height: 297px;
+    }
+    
+    /* provider-card-background */
+    .provider-card-background{
+    position: absolute;
+    left: 0%;
+    right: 0%;
+    top: 0%;
+    bottom: 0%;
+    /* light-yellow */
+    background: #F0DDAA;
+    border: #132B3C solid 5px;
+    border-radius: 10px;
+    }
+    
+    /* location-icon */
+    .location-icon {
+    position: absolute;
+    width: 47px;
+    height: 47px;
+    left: 215px;
+    top: 226px;
+    }
+    
+    /* phone-icon */
+    .phone-icon{
+    position: absolute;
+    width: 47px;
+    height: 47px;
+    left: 165px;
+    top: 226px;
+    }
+    
+    /* provider-name */
+    .provider-name{
+        position: absolute;
+        width: 189px;
+        height: 48px;
+        left: 23px;
+        top: 158px;
+
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 24px;
+        line-height: 28px;
+
+        color: #132B3C;
+    }
+
+
+    /* provider-logo */
+    .provider-logo{
+    position: absolute;
+    width: 240px;
+    height: 122px;
+    left: 23px;
+    top: 22px;
+    }
+    
+    /* provider-nit */
+    .provider-nit{
+    position: absolute;
+    width: 125px;
+    height: 19px;
+    left: 23px;
+    top: 246px;
+    
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    
+    color: #132B3C;
+    }
+    
+    
+    /* provider-business-name */
+    .provider-business-name{
+    position: absolute;
+    width: 142px;
+    height: 29px;
+    left: 23px;
+    top: 208px;
+    
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    
+    color: #132B3C;
+    }
+    
+    
+    /* star-rating */
+    .star-rating{
+    /* Auto Layout */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0px;
+    
+    position: absolute;
+    width: 54px;
+    height: 24px;
+    left: 212px;
+    top: 168px;
+    }
+    
+    
+    /* star-icon */
+    .star-icon{
+    position: static;
+    width: 24px;
+    height: 24px;
+    left: 0px;
+    top: 0px;
+    
+    
+    /* Inside Auto Layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    margin: 0px 1px;
+    }
+    
+    /* rating-number */
+    .rating-number{
+    position: static;
+    width: 29px;
+    height: 24px;
+    left: 25px;
+    top: 0px;
+    
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    
+    /* black */
+    color: #132B3C;
+    
+    
+    /* Inside Auto Layout */
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+    margin: 0px 1px;
+    }
