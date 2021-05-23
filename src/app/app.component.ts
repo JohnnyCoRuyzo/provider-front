@@ -274,7 +274,6 @@ export class AppComponent {
   editProvider(event:any){
     this.editingProvider = true;
     var providerToEdit = this.providerInfoList.filter(provider => provider.providerName == event).splice(0,1)[0];
-    console.log(providerToEdit);
     this.fields = [
       {
         fieldOrder: 1,
@@ -317,15 +316,6 @@ export class AppComponent {
         fieldValue: providerToEdit.providerCreationDate
       }
     ];
-    console.log(this.fields[0]);
-    console.log(this.fields[1]);
-    console.log(this.fields[2]);
-    console.log(this.fields[3]);
-    console.log(this.fields[4]);
-    console.log(this.fields[5]);
-    console.log(this.fields[6]);
-    console.log(this.fields[7]);
-    console.log(this.fields[8]);
   }
 
   deleteProvider(event:any){
