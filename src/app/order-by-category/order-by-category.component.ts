@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-order-by-category',
@@ -7,6 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class OrderByCategoryComponent implements OnInit {
   @Input() category!: any;
+  @Output() categoryChange = new EventEmitter<string>();
   name: string = "";
   checked: boolean = false;
 
@@ -19,5 +20,10 @@ export class OrderByCategoryComponent implements OnInit {
   initializeCategory(category: any){
     this.name = category.categoryName;
     this.checked = category.categoryChecked;
+  }
+
+  categoryChanged(){
+    this.checked=!this.checked;
+    this.categoryChange.emit(this.name);
   }
 }
