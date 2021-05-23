@@ -349,7 +349,7 @@ flex-grow: 0;
 .highest-rated-providers-section{
 position: relative;
 margin-top: 32px;
-margin-left: 14%;
+margin-left: 50px;
 margin-bottom: 15%;
 }
 
@@ -375,7 +375,7 @@ top: 0px;
 /* black */
 background: #132B3C;
 border-radius: 10px;
-height: 110%;
+height: 150%;
 }
 
 /* highest-rated-providers-background */

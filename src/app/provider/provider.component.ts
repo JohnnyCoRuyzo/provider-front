@@ -25,7 +25,7 @@ export class ProviderComponent implements OnInit {
   initializeProvider(providerInfo: any){
     this.name = providerInfo.providerName;
     this.businessName = providerInfo.providerBusinessName;
-    this.nit = providerInfo.providerNit;
+    this.nit = "N.I.T.: " + providerInfo.providerNIT;
     this.ratingNumber = providerInfo.providerRatingNumber;
     this.address = "https://www.google.com/maps/place/" + providerInfo.providerAddress.replace(" ","+").replace("#","").replace("-","");
     this.phoneNumber = "https://wa.me/" + providerInfo.providerPhoneNumber.replace(" ","").replace("+","");

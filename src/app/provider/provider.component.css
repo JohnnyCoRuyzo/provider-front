@@ -3,7 +3,7 @@
     .provider-card{
     position: relative;
     width: 297px;
-    height: 297px;
+    height: 330px;
     }
     
     /* provider-card-background */
@@ -25,7 +25,7 @@
     width: 47px;
     height: 47px;
     left: 215px;
-    top: 200px;
+    top: 225px;
     cursor: pointer;
     }
     
@@ -35,7 +35,7 @@
     width: 47px;
     height: 47px;
     left: 165px;
-    top: 200px;
+    top: 225px;
     cursor: pointer;
     }
     
@@ -45,7 +45,7 @@
         width: 47px;
         height: 47px;
         left: 165px;
-        top: 240px;
+        top: 270px;
         cursor: pointer;
         }
         
@@ -55,7 +55,7 @@
         width: 47px;
         height: 47px;
         left: 215px;
-        top: 240px;
+        top: 270px;
         cursor: pointer;
         }
     
@@ -69,8 +69,8 @@
 
         font-family: Roboto;
         font-style: normal;
-        font-weight: normal;
-        font-size: 24px;
+        font-weight: bold;
+        font-size: 19px;
         line-height: 28px;
 
         color: #132B3C;
@@ -92,7 +92,7 @@
     width: 125px;
     height: 19px;
     left: 23px;
-    top: 246px;
+    top: 300px;
     
     font-family: Roboto;
     font-style: normal;
@@ -112,7 +112,7 @@
     width: 142px;
     height: 29px;
     left: 23px;
-    top: 208px;
+    top: 240px;
     
     font-family: Roboto;
     font-style: normal;

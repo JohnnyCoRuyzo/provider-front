@@ -213,9 +213,12 @@
           </div>
         </div>
       </div>
+      <div class="col-sm-6" style="visibility: hidden;">
+            <input class="form-provider-input-text" style="border:none; outline: none;" #idInputEdit value="{{fields[8].fieldValue}}"/>
+      </div>
     </div>
     <div class="row" style="margin-left: 10%;margin-right: 10%;margin-top: 5%;margin-bottom: 20%;">
-      <div class="col-sm-8 save-provider" (click)="updateProvider(orderInputEdit.value,creationDateInputEdit.value,nameInputEdit.value,businessNameInputEdit.value,nitInputEdit.value,addressInputEdit.value,phoneNumberInputEdit.value,ratingNumberInputEdit.value);">
+      <div class="col-sm-8 save-provider" (click)="updateProvider(idInputEdit.value,orderInputEdit.value,creationDateInputEdit.value,nameInputEdit.value,businessNameInputEdit.value,nitInputEdit.value,addressInputEdit.value,phoneNumberInputEdit.value,ratingNumberInputEdit.value);">
         <div class="save-provider-text">edit provider</div>
       </div>
       <div class="col-sm-3 cancel-creation ml-5"  (click)="editingProvider=false;">
