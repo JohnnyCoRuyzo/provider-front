@@ -14,7 +14,7 @@
   </div>
   <div *ngIf="!creatingProvider&&!editingProvider">
     <div class="row">
-      <a *ngIf="lastSearchText!=''" class="refresh-icon col-sm-6" (click)="searchTextClicked('');">
+      <a *ngIf="lastSearchText!=''" class="refresh-icon col-sm-6" (click)="searchText.value='';searchTextClicked('');">
         <span class="iconify" data-inline="false" data-icon="foundation:refresh" style="font-size: 39px;position: relative;"></span>
       </a>
     <div class="search-bar col-sm-6" (keyup.enter)="searchTextClicked(searchText.value);">
