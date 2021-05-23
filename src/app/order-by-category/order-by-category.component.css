@@ -18,7 +18,7 @@
     flex: none;
     order: 0;
     flex-grow: 0;
-    margin: 20px 0px;
+    margin: 10px 0px;
     }
     
     /* checkbox-rectangle-unselected */
@@ -83,7 +83,7 @@
     flex: none;
     order: 1;
     flex-grow: 0;
-    margin: 20px 0px;
+    margin: 10px 0px;
     }
     
     /* checkbox-selected */

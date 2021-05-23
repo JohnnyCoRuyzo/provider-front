@@ -27,6 +27,9 @@
           <div class="col-sm-2 col-2" *ngFor="let providerInfo of providerInfoList" class="provider-card-position">
             <app-provider [providerInfo] = "providerInfo"></app-provider>
           </div>
+          <div class="dots-icon col-12 text-center" style="margin-top: 32px;">
+            <span class="iconify" data-inline="false" data-icon="bx:bx-dots-horizontal-rounded" style="font-size: 77px;"></span>
+          </div>
     </div>
     <div class="container row col-sm-3 provider-order-by-container">
       <div class="order-by-section">
@@ -40,6 +43,18 @@
                     <app-order-by-category [category] = "category"></app-order-by-category>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="highest-rated-providers-section">
+        <div class="highest-rated-providers-card">
+          <div class="highest-rated-providers-border">
+            <div class="highest-rated-providers-background">
+              <div class="highest-rated-providers-content">
+                <div class="highest-rated-providers-title">HIGHEST RATED PROVIDERS</div>
+                <div class="highest-rated-providers-list"></div>
               </div>
             </div>
           </div>
