@@ -12,19 +12,21 @@
       provider.info
     </div>
   </div>
-  <div class="search-bar">
-    <div class="search-bar-entry">
-      <div class="search-icon">
+  <div class="row">
+    <a *ngIf="lastSearchText!=''" class="refresh-icon col-sm-6" (click)="searchTextClicked('');">
+      <span class="iconify" data-inline="false" data-icon="foundation:refresh" style="font-size: 39px;position: relative;"></span>
+    </a>
+  <div class="search-bar col-sm-6" (keyup.enter)="searchTextClicked(searchText.value);">
+    <div class="search-bar-entry row">
+      <a class="search-icon col-sm-1" (onclick)="searchTextClicked(searchText.value);">
         <span class="iconify" data-inline="false" data-icon="fa-solid:search" style="color: #132b3c; font-size: 33px;"></span>
-      </div>
-      <div class="search-bar-text">
-        Search provider ...
-      </div>
-    </div>
+      </a>
+      <input class="search-bar-text col-sm-11" style="border:none; outline: none;" placeholder="Search provider ..." #searchText/>
+    </div></div>
   </div>
   <div class="row ml-5 mr-5">
     <div class="container row col-sm-9 provider-card-container"> 
-          <div class="col-sm-2 col-2" *ngFor="let providerInfo of providerInfoList" class="provider-card-position">
+          <div class="col-sm-2 col-2" *ngFor="let providerInfo of providerInfoList; trackBy: trackByProvider" class="provider-card-position">
             <app-provider [providerInfo] = "providerInfo"></app-provider>
           </div>
           <div class="dots-icon col-12 text-center" style="margin-top: 32px;">
@@ -39,8 +41,8 @@
               <div class="order-by-content">
                 <div class="order-by-text">ORDER BY</div>
                 <div class="order-by-list">
-                  <div *ngFor="let category of orderByCategories">
-                    <app-order-by-category [category] = "category"></app-order-by-category>
+                  <div *ngFor="let category of orderByCategories; trackBy: trackByCategory">
+                    <app-order-by-category [category] = "category" (categoryChange)="categoryChanged($event);"></app-order-by-category>
                   </div>
                 </div>
               </div>
@@ -55,7 +57,9 @@
               <div class="highest-rated-providers-content">
                 <div class="highest-rated-providers-title">HIGHEST RATED PROVIDERS</div>
                 <div class="highest-rated-providers-list">
-                  
+                  <div *ngFor="let ratedProvider of ratedProviders">
+                    <app-highest-rated-provider [ratedProvider] = "ratedProvider"></app-highest-rated-provider>
+                  </div>
                 </div>
               </div>
             </div>
