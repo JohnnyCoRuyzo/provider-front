@@ -8,8 +8,11 @@ import { Component } from '@angular/core';
 export class AppComponent {
   orderByCategories = this.initializeCategories();
   providerInfoList = this.initializeProviderList();
+  fields = this.initializeFields(); 
   ratedProviders = this.providerInfoList.sort((a,b) => (a.providerRatingNumber > b.providerRatingNumber ? -1 : 1)).slice(0, 5);
   lastSearchText = "";
+  creatingProvider: boolean = false;
+  editingProvider: boolean = false;
   
   ngOnInit(): void{
     this.searchTextClicked("");
@@ -151,6 +154,10 @@ export class AppComponent {
     return item.providerOrder + " " + item.providerName;
   }
 
+  trackByRating(i:any, item:any) {
+    return item.providerRatingNumber + " " + item.providerName;
+  }
+
   categoryChanged(event:any){
     this.orderByCategories.forEach(category => category.categoryChecked = false);
     this.orderByCategories.filter(category => category.categoryName == event).splice(0,1).forEach(category => category.categoryChecked = true);
@@ -174,5 +181,154 @@ export class AppComponent {
         var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
         return result * sortOrder;
     }
-}
+  }
+
+  initializeFields(){
+  return [
+    {
+      fieldOrder: 1,
+      fieldLabel: "Provider Name",
+      fieldValue: ""
+    },
+    {
+      fieldOrder: 2,
+      fieldLabel: "Provider Business Name",
+      fieldValue: ""
+    },
+    {
+      fieldOrder: 3,
+      fieldLabel: "Provider N.I.T.",
+      fieldValue: ""
+    },
+    {
+      fieldOrder: 4,
+      fieldLabel: "Provider Address",
+      fieldValue: ""
+    },
+    {
+      fieldOrder: 5,
+      fieldLabel: "Provider Phone Number",
+      fieldValue: ""
+    },
+    {
+      fieldOrder: 6,
+      fieldLabel: "Provider Rating Number",
+      fieldValue: ""
+    }
+  ];
+  }
+
+  saveProvider(nameInput:any,businessNameInput:any,nitInput:any,addressInput:any,phoneNumberInput:any,ratingNumberInput:any){
+
+    var nextOrder =  this.providerInfoList.sort(this.dynamicSort("-providerOrder"))[0].providerOrder + 1;
+    this.providerInfoList = this.providerInfoList.concat({
+        providerOrder: nextOrder,
+        providerName: nameInput,
+        providerBusinessName: businessNameInput,
+        providerNit: nitInput,
+        providerRatingNumber: ratingNumberInput,
+        providerAddress: addressInput,
+        providerPhoneNumber: phoneNumberInput,
+        providerCreationDate: (new Date()).toISOString().split('T')[0],
+        providerLastModificationDate: ""
+    });
+
+    nameInput = "";
+    businessNameInput = "";
+    nitInput = "";
+    addressInput = "";
+    phoneNumberInput = "";
+    ratingNumberInput = "";
+
+    this.creatingProvider = false;
+  }
+
+  updateProvider(orderInputEdit:any,creationDateInputEdit:any,nameInputEdit:any,businessNameInputEdit:any,nitInputEdit:any,addressInputEdit:any,phoneNumberInputEdit:any,ratingNumberInputEdit:any){
+
+    var orderToEdit =  parseInt(orderInputEdit);
+    this.providerInfoList = this.providerInfoList.filter(provider => provider.providerOrder != orderToEdit)
+    this.providerInfoList = this.providerInfoList.concat({
+        providerOrder: orderToEdit,
+        providerName: nameInputEdit,
+        providerBusinessName: businessNameInputEdit,
+        providerNit: nitInputEdit,
+        providerRatingNumber: ratingNumberInputEdit,
+        providerAddress: addressInputEdit,
+        providerPhoneNumber: phoneNumberInputEdit,
+        providerCreationDate: creationDateInputEdit,
+        providerLastModificationDate: (new Date()).toISOString().split('T')[0]
+    });
+
+    orderInputEdit = "";
+    creationDateInputEdit = "";
+    nameInputEdit = "";
+    businessNameInputEdit = "";
+    nitInputEdit = "";
+    addressInputEdit = "";
+    phoneNumberInputEdit = "";
+    ratingNumberInputEdit = "";
+
+    this.editingProvider = false;
+  }
+
+  editProvider(event:any){
+    this.editingProvider = true;
+    var providerToEdit = this.providerInfoList.filter(provider => provider.providerName == event).splice(0,1)[0];
+    console.log(providerToEdit);
+    this.fields = [
+      {
+        fieldOrder: 1,
+        fieldLabel: "Provider Name",
+        fieldValue: providerToEdit.providerName
+      },
+      {
+        fieldOrder: 2,
+        fieldLabel: "Provider Business Name",
+        fieldValue: providerToEdit.providerBusinessName
+      },
+      {
+        fieldOrder: 3,
+        fieldLabel: "Provider N.I.T.",
+        fieldValue: providerToEdit.providerNit
+      },
+      {
+        fieldOrder: 4,
+        fieldLabel: "Provider Address",
+        fieldValue: providerToEdit.providerAddress
+      },
+      {
+        fieldOrder: 5,
+        fieldLabel: "Provider Phone Number",
+        fieldValue: providerToEdit.providerPhoneNumber
+      },
+      {
+        fieldOrder: 6,
+        fieldLabel: "Provider Rating Number",
+        fieldValue: providerToEdit.providerRatingNumber
+      },
+      {
+        fieldOrder: 7,
+        fieldLabel: "Provider Order",
+        fieldValue: providerToEdit.providerOrder.toString()
+      },
+      {
+        fieldOrder: 8,
+        fieldLabel: "Provider Creation Date",
+        fieldValue: providerToEdit.providerCreationDate
+      }
+    ];
+    console.log(this.fields[0]);
+    console.log(this.fields[1]);
+    console.log(this.fields[2]);
+    console.log(this.fields[3]);
+    console.log(this.fields[4]);
+    console.log(this.fields[5]);
+    console.log(this.fields[6]);
+    console.log(this.fields[7]);
+    console.log(this.fields[8]);
+  }
+
+  deleteProvider(event:any){
+    this.providerInfoList = this.providerInfoList.filter(provider => provider.providerName != event);
+  }
 }

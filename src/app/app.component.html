@@ -12,61 +12,216 @@
       provider.info
     </div>
   </div>
-  <div class="row">
-    <a *ngIf="lastSearchText!=''" class="refresh-icon col-sm-6" (click)="searchTextClicked('');">
-      <span class="iconify" data-inline="false" data-icon="foundation:refresh" style="font-size: 39px;position: relative;"></span>
-    </a>
-  <div class="search-bar col-sm-6" (keyup.enter)="searchTextClicked(searchText.value);">
-    <div class="search-bar-entry row">
-      <a class="search-icon col-sm-1" (onclick)="searchTextClicked(searchText.value);">
-        <span class="iconify" data-inline="false" data-icon="fa-solid:search" style="color: #132b3c; font-size: 33px;"></span>
+  <div *ngIf="!creatingProvider&&!editingProvider">
+    <div class="row">
+      <a *ngIf="lastSearchText!=''" class="refresh-icon col-sm-6" (click)="searchTextClicked('');">
+        <span class="iconify" data-inline="false" data-icon="foundation:refresh" style="font-size: 39px;position: relative;"></span>
       </a>
-      <input class="search-bar-text col-sm-11" style="border:none; outline: none;" placeholder="Search provider ..." #searchText/>
-    </div></div>
+    <div class="search-bar col-sm-6" (keyup.enter)="searchTextClicked(searchText.value);">
+      <div class="search-bar-entry row">
+        <a class="search-icon col-sm-1" (click)="searchTextClicked(searchText.value);">
+          <span class="iconify" data-inline="false" data-icon="fa-solid:search" style="color: #132b3c; font-size: 33px;"></span>
+        </a>
+        <input class="search-bar-text col-sm-11" style="border:none; outline: none;" placeholder="Search provider ..." #searchText/>
+      </div></div>
+    </div>
+    <div class="row ml-5 mr-5">
+      <div class="container row col-sm-9 provider-card-container"> 
+            <div class="col-sm-3 col-3" *ngFor="let providerInfo of providerInfoList; trackBy: trackByProvider" class="provider-card-position">
+              <app-provider [providerInfo] = "providerInfo" (editProvider)= "editProvider($event)" (deleteProvider)= "deleteProvider($event)"></app-provider>
+            </div>
+            <div class="dots-icon col-12 text-center">
+              <span class="iconify" data-inline="false" data-icon="bx:bx-dots-horizontal-rounded" style="font-size: 77px;"></span>
+            </div>
+            <div class="add-bar col-11" (click)="creatingProvider=true;" style="margin-bottom: 20%;">
+              <div class="add-bar-text" >+ add another provider</div>
+            </div>
+      </div>
+      <div class="container row col-sm-3 provider-order-by-container">
+        <div class="order-by-section">
+          <div class="order-by-card">
+            <div class="order-by-border">
+              <div class="order-by-background">
+                <div class="order-by-content">
+                  <div class="order-by-text">ORDER BY</div>
+                  <div class="order-by-list">
+                    <div *ngFor="let category of orderByCategories; trackBy: trackByCategory">
+                      <app-order-by-category [category] = "category" (categoryChange)="categoryChanged($event);"></app-order-by-category>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="highest-rated-providers-section">
+          <div class="highest-rated-providers-card">
+            <div class="highest-rated-providers-border">
+              <div class="highest-rated-providers-background">
+                <div class="highest-rated-providers-content">
+                  <div class="highest-rated-providers-title">HIGHEST RATED PROVIDERS</div>
+                  <div class="highest-rated-providers-list">
+                    <div *ngFor="let ratedProvider of ratedProviders; trackBy: trackByRating">
+                      <app-highest-rated-provider [ratedProvider] = "ratedProvider"></app-highest-rated-provider>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="row ml-5 mr-5">
-    <div class="container row col-sm-9 provider-card-container"> 
-          <div class="col-sm-2 col-2" *ngFor="let providerInfo of providerInfoList; trackBy: trackByProvider" class="provider-card-position">
-            <app-provider [providerInfo] = "providerInfo"></app-provider>
-          </div>
-          <div class="dots-icon col-12 text-center" style="margin-top: 32px;">
-            <span class="iconify" data-inline="false" data-icon="bx:bx-dots-horizontal-rounded" style="font-size: 77px;"></span>
-          </div>
-    </div>
-    <div class="container row col-sm-3 provider-order-by-container">
-      <div class="order-by-section">
-        <div class="order-by-card">
-          <div class="order-by-border">
-            <div class="order-by-background">
-              <div class="order-by-content">
-                <div class="order-by-text">ORDER BY</div>
-                <div class="order-by-list">
-                  <div *ngFor="let category of orderByCategories; trackBy: trackByCategory">
-                    <app-order-by-category [category] = "category" (categoryChange)="categoryChanged($event);"></app-order-by-category>
-                  </div>
-                </div>
-              </div>
+  <div *ngIf="creatingProvider">
+    <div class="row form-input-container">
+      <div class="col-sm-6">
+        <div class="form-input">
+            <div class="form-provider-input-label">
+            {{fields[0].fieldLabel}}
             </div>
+            <div class="form-provider-input-rectangle">
+            <input class="form-provider-input-text" style="border:none; outline: none;" #nameInput/>
           </div>
         </div>
       </div>
-      <div class="highest-rated-providers-section">
-        <div class="highest-rated-providers-card">
-          <div class="highest-rated-providers-border">
-            <div class="highest-rated-providers-background">
-              <div class="highest-rated-providers-content">
-                <div class="highest-rated-providers-title">HIGHEST RATED PROVIDERS</div>
-                <div class="highest-rated-providers-list">
-                  <div *ngFor="let ratedProvider of ratedProviders">
-                    <app-highest-rated-provider [ratedProvider] = "ratedProvider"></app-highest-rated-provider>
-                  </div>
-                </div>
-              </div>
+      <div class="col-sm-6">
+        <div class="form-input">
+            <div class="form-provider-input-label">
+            {{fields[1].fieldLabel}}
             </div>
+            <div class="form-provider-input-rectangle">
+            <input class="form-provider-input-text" style="border:none; outline: none;" #businessNameInput/>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-input">
+            <div class="form-provider-input-label">
+            {{fields[2].fieldLabel}}
+            </div>
+            <div class="form-provider-input-rectangle">
+            <input class="form-provider-input-text" style="border:none; outline: none;" #nitInput/>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-input">
+            <div class="form-provider-input-label">
+            {{fields[3].fieldLabel}}
+            </div>
+            <div class="form-provider-input-rectangle">
+            <input class="form-provider-input-text" style="border:none; outline: none;" #addressInput/>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-input">
+            <div class="form-provider-input-label">
+            {{fields[4].fieldLabel}}
+            </div>
+            <div class="form-provider-input-rectangle">
+            <input class="form-provider-input-text" style="border:none; outline: none;" #phoneNumberInput/>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-input">
+            <div class="form-provider-input-label">
+            {{fields[5].fieldLabel}}
+            </div>
+            <div class="form-provider-input-rectangle">
+            <input class="form-provider-input-text" style="border:none; outline: none;" #ratingNumberInput/>
           </div>
         </div>
       </div>
     </div>
-</div>
+    <div class="row" style="margin-left: 10%;margin-right: 10%;margin-top: 5%;margin-bottom: 20%;">
+      <div class="col-sm-8 save-provider" (click)="saveProvider(nameInput.value,businessNameInput.value,nitInput.value,addressInput.value,phoneNumberInput.value,ratingNumberInput.value);">
+        <div class="save-provider-text">+ add provider</div>
+      </div>
+      <div class="col-sm-3 cancel-creation ml-5" (click)="creatingProvider=false;">
+        <div class="cancel-text">cancel</div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="editingProvider">
+    <div class="row form-input-container">
+      <div class="col-sm-6" style="visibility: hidden;">
+            <input class="form-provider-input-text" style="border:none; outline: none;" #orderInputEdit value="{{fields[6].fieldValue}}"/>
+      </div>
+      <div class="col-sm-6" style="visibility: hidden;">
+            <input class="form-provider-input-text" style="border:none; outline: none;" #creationDateInputEdit value="{{fields[7].fieldValue}}"/>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-input">
+            <div class="form-provider-input-label">
+            {{fields[0].fieldLabel}}
+            </div>
+            <div class="form-provider-input-rectangle">
+            <input class="form-provider-input-text" style="border:none; outline: none;" #nameInputEdit value="{{fields[0].fieldValue}}"/>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-input">
+            <div class="form-provider-input-label">
+            {{fields[1].fieldLabel}}
+            </div>
+            <div class="form-provider-input-rectangle">
+            <input class="form-provider-input-text" style="border:none; outline: none;" #businessNameInputEdit value="{{fields[1].fieldValue}}"/>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-input">
+            <div class="form-provider-input-label">
+            {{fields[2].fieldLabel}}
+            </div>
+            <div class="form-provider-input-rectangle">
+            <input class="form-provider-input-text" style="border:none; outline: none;" #nitInputEdit value="{{fields[2].fieldValue}}"/>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-input">
+            <div class="form-provider-input-label">
+            {{fields[3].fieldLabel}}
+            </div>
+            <div class="form-provider-input-rectangle">
+            <input class="form-provider-input-text" style="border:none; outline: none;" #addressInputEdit value="{{fields[3].fieldValue}}"/>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-input">
+            <div class="form-provider-input-label">
+            {{fields[4].fieldLabel}}
+            </div>
+            <div class="form-provider-input-rectangle">
+            <input class="form-provider-input-text" style="border:none; outline: none;" #phoneNumberInputEdit value="{{fields[4].fieldValue}}"/>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-input">
+            <div class="form-provider-input-label">
+            {{fields[5].fieldLabel}}
+            </div>
+            <div class="form-provider-input-rectangle">
+            <input class="form-provider-input-text" style="border:none; outline: none;" #ratingNumberInputEdit value="{{fields[5].fieldValue}}"/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-left: 10%;margin-right: 10%;margin-top: 5%;margin-bottom: 20%;">
+      <div class="col-sm-8 save-provider" (click)="updateProvider(orderInputEdit.value,creationDateInputEdit.value,nameInputEdit.value,businessNameInputEdit.value,nitInputEdit.value,addressInputEdit.value,phoneNumberInputEdit.value,ratingNumberInputEdit.value);">
+        <div class="save-provider-text">edit provider</div>
+      </div>
+      <div class="col-sm-3 cancel-creation ml-5"  (click)="editingProvider=false;">
+        <div class="cancel-text">cancel</div>
+      </div>
+    </div>
+  </div>
 </div>
 <router-outlet></router-outlet>

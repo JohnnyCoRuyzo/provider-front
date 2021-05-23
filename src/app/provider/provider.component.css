@@ -25,7 +25,8 @@
     width: 47px;
     height: 47px;
     left: 215px;
-    top: 226px;
+    top: 200px;
+    cursor: pointer;
     }
     
     /* phone-icon */
@@ -34,8 +35,29 @@
     width: 47px;
     height: 47px;
     left: 165px;
-    top: 226px;
+    top: 200px;
+    cursor: pointer;
     }
+    
+    /* edit-icon */
+    .edit-icon {
+        position: absolute;
+        width: 47px;
+        height: 47px;
+        left: 165px;
+        top: 240px;
+        cursor: pointer;
+        }
+        
+        /* delete-icon */
+        .delete-icon{
+        position: absolute;
+        width: 47px;
+        height: 47px;
+        left: 215px;
+        top: 240px;
+        cursor: pointer;
+        }
     
     /* provider-name */
     .provider-name{
@@ -114,7 +136,7 @@
     width: 54px;
     height: 24px;
     left: 212px;
-    top: 168px;
+    top: 160px;
     }
     
     
