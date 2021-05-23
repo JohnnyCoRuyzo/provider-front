@@ -1,0 +1,127 @@
+
+    /* highest-rated-providers */
+    .highest-rated-providers{
+    /* Auto Layout */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0px;
+    
+    position: static;
+    width: 234px;
+    height: 24px;
+    left: 0px;
+    top: 0px;
+    
+    
+    /* Inside Auto Layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    margin: 10px 0px;
+    }
+    
+    /* star-review */
+    .star-review{
+    /* Auto Layout */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0px;
+    
+    position: static;
+    width: 54px;
+    height: 24px;
+    left: 0px;
+    top: 0px;
+    
+    
+    /* Inside Auto Layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    margin: 0px 9px;
+    }
+    
+    /* star-icon */
+    .start-icon{
+    position: static;
+    width: 24px;
+    height: 24px;
+    left: 0px;
+    top: 0px;
+    
+    
+    /* Inside Auto Layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    margin: 0px 1px;
+    }
+    
+    /* Vector */
+    .start-icon-vector{
+    position: absolute;
+    left: 8.33%;
+    right: 8.33%;
+    top: 8.33%;
+    bottom: 8.33%;
+    
+    /* light-yellow */
+    background: #F0DDAA;
+    }
+    
+    /* review-number */
+    .review-number{
+    position: static;
+    width: 29px;
+    height: 24px;
+    left: 25px;
+    top: 0px;
+    
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    
+    /* light-yellow */
+    color: #F0DDAA;
+    
+    
+    /* Inside Auto Layout */
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+    margin: 0px 1px;
+    }
+    
+    /* highest-rated-providers-name */
+    .highest-rated-providers-name{
+    position: static;
+    width: 171px;
+    height: 22px;
+    left: 63px;
+    top: 0px;
+    
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+    
+    /* light-yellow */
+    color: #F0DDAA;
+    
+    
+    /* Inside Auto Layout */
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+    margin: 0px 9px;
+    }
