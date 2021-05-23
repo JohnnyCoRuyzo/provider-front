@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ProviderService } from './provider-services/provider.service';
 
 @Component({
   selector: 'app-root',
@@ -6,112 +7,28 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  orderByCategories = this.initializeCategories();
-  providerInfoList = this.initializeProviderList();
-  fields = this.initializeFields(); 
-  ratedProviders = this.providerInfoList.sort((a,b) => (a.providerRatingNumber > b.providerRatingNumber ? -1 : 1)).slice(0, 5);
-  lastSearchText = "";
+  orderByCategories:any = [];
+  providerInfoList:any = [];
+  fields:any = [];
+  ratedProviders = [];
   creatingProvider: boolean = false;
   editingProvider: boolean = false;
+  lastSearchText:string = "";
   
+  constructor(private providerService: ProviderService){
+
+  }
+
   ngOnInit(): void{
+    this.initializeCategories();
+    this.initializeProviderList();
+    this.initializeFields(); 
     this.searchTextClicked("");
   }
 
-  searchTextClicked(searchText: string){ 
-    this.lastSearchText = searchText;
-    this.providerInfoList = this.initializeProviderList();
-    this.providerInfoList = this.orderProviderList();
-    searchText = searchText.toUpperCase();
-    this.providerInfoList = this.providerInfoList.filter(provider => 
-      provider.providerName.toUpperCase().includes(searchText) ||
-      provider.providerBusinessName.toUpperCase().includes(searchText) ||
-      provider.providerAddress.toUpperCase().includes(searchText) ||
-      provider.providerNit.toUpperCase().includes(searchText) ||
-      provider.providerPhoneNumber.toUpperCase().includes(searchText));
-  } 
-
-  initializeProviderList(){
-    return [
-      {
-        providerOrder: 1,
-        providerName: "Name 1",
-        providerBusinessName: "Business Name 6",
-        providerNit: "N.I.T. 1",
-        providerRatingNumber: "5.0",
-        providerAddress: "Cra. 49 #104A - 14",
-        providerPhoneNumber: "573112849616",
-        providerCreationDate: "2021-05-22",
-        providerLastModificationDate: "2021-05-22"
-      },
-      {
-        providerOrder: 2,
-        providerName: "Name 2",
-        providerBusinessName: "Business Name 1",
-        providerNit: "N.I.T. 2",
-        providerRatingNumber: "4.5",
-        providerAddress: "Cra. 49B #104A - 12",
-        providerPhoneNumber: "573112849616",
-        providerCreationDate: "2021-04-22",
-        providerLastModificationDate: "2021-05-21"
-      },
-      {
-        providerOrder: 3,
-        providerName: "Name 3",
-        providerBusinessName: "Business Name 5",
-        providerNit: "N.I.T. 3",
-        providerRatingNumber: "4.0",
-        providerAddress: "Cra. 49B #104A - 12",
-        providerPhoneNumber: "573112849610",
-        providerCreationDate: "2021-05-01",
-        providerLastModificationDate: "2021-05-20"
-      },
-      {
-        providerOrder: 4,
-        providerName: "Name 4",
-        providerBusinessName: "Business Name 4",
-        providerNit: "N.I.T. 4",
-        providerRatingNumber: "3.9",
-        providerAddress: "Cra. 49 #104A - 14",
-        providerPhoneNumber: "573112849614",
-        providerCreationDate: "2021-05-17",
-        providerLastModificationDate: "2021-05-19"
-      },
-      {
-        providerOrder: 5,
-        providerName: "Name 5",
-        providerBusinessName: "Business Name 3",
-        providerNit: "N.I.T. 5",
-        providerRatingNumber: "3.8",
-        providerAddress: "Cra. 49B #104A - 12",
-        providerPhoneNumber: "573112849616",
-        providerCreationDate: "2021-05-19",
-        providerLastModificationDate: "2021-05-18"
-      },
-      {
-        providerOrder: 6,
-        providerName: "Name 6",
-        providerBusinessName: "Business Name 2",
-        providerNit: "N.I.T. 6",
-        providerRatingNumber: "3.7",
-        providerAddress: "Cra. 49B #104A - 12",
-        providerPhoneNumber: "573112849610",
-        providerCreationDate: "2021-05-09",
-        providerLastModificationDate: "2021-05-17"
-      }
-    ];
-  }
-
-  orderProviderList(){
-    var categorySelected = this.orderByCategories.filter(category => category.categoryChecked == true).splice(0,1)[0].categoryProviderProperty;
-    this.providerInfoList = this.providerInfoList.sort(this.dynamicSort(categorySelected));
-    var orderCount = 0;
-    this.providerInfoList.forEach(provider => provider.providerOrder = orderCount++);
-    return this.providerInfoList.sort(this.dynamicSort("providerOrder"));
-  }
 
   initializeCategories(){
-    return [
+    this.orderByCategories = [
       {
         categoryName: "Creation Date",
         categoryProviderProperty: "providerCreationDate",
@@ -150,6 +67,73 @@ export class AppComponent {
     ];
   }
 
+  initializeProviderList(){
+    return this.providerService.getAllProviders()
+    .subscribe((data: any) =>{
+          this.providerInfoList = data;
+          this.ratedProviders = this.providerInfoList.sort((a:any,b:any) => (a.providerRatingNumber > b.providerRatingNumber ? -1 : 1)).slice(0, 5);
+        });
+  }
+  
+  initializeFields(){
+    this.fields = [
+      {
+        fieldOrder: 1,
+        fieldLabel: "Provider Name",
+        fieldValue: ""
+      },
+      {
+        fieldOrder: 2,
+        fieldLabel: "Provider Business Name",
+        fieldValue: ""
+      },
+      {
+        fieldOrder: 3,
+        fieldLabel: "Provider N.I.T.",
+        fieldValue: ""
+      },
+      {
+        fieldOrder: 4,
+        fieldLabel: "Provider Address",
+        fieldValue: ""
+      },
+      {
+        fieldOrder: 5,
+        fieldLabel: "Provider Phone Number",
+        fieldValue: ""
+      },
+      {
+        fieldOrder: 6,
+        fieldLabel: "Provider Rating Number",
+        fieldValue: ""
+      }
+    ];
+  }
+
+  searchTextClicked(searchText: string){ 
+    this.lastSearchText = searchText;
+    this.providerService.getAllProviders()
+    .subscribe((data: any) =>{
+          this.providerInfoList = data;
+          this.providerInfoList = this.orderProviderList();
+          searchText = searchText.toUpperCase();
+          this.providerInfoList = this.providerInfoList.filter((provider:any) => 
+            provider.providerName.toUpperCase().includes(searchText) ||
+            provider.providerBusinessName.toUpperCase().includes(searchText) ||
+            provider.providerAddress.toUpperCase().includes(searchText) ||
+            provider.providerNIT.toUpperCase().includes(searchText) ||
+            provider.providerPhoneNumber.toUpperCase().includes(searchText));
+        });
+  } 
+
+  orderProviderList(){
+    var categorySelected = this.orderByCategories.filter((category:any) => category.categoryChecked == true).splice(0,1)[0].categoryProviderProperty;
+    this.providerInfoList = this.providerInfoList.sort(this.dynamicSort(categorySelected));
+    var orderCount = 0;
+    this.providerInfoList.forEach((provider:any) => provider.providerOrder = orderCount++);
+    return this.providerInfoList.sort(this.dynamicSort("providerOrder"));
+  }
+
   trackByProvider(i:any, item:any) {
     return item.providerOrder + " " + item.providerName;
   }
@@ -158,15 +142,15 @@ export class AppComponent {
     return item.providerRatingNumber + " " + item.providerName;
   }
 
-  categoryChanged(event:any){
-    this.orderByCategories.forEach(category => category.categoryChecked = false);
-    this.orderByCategories.filter(category => category.categoryName == event).splice(0,1).forEach(category => category.categoryChecked = true);
-    this.providerInfoList = this.orderProviderList();
-  }
-
   trackByCategory(i:any, item:any) {
     return item.categoryChecked + " " + item.categoryName;
-}
+  }
+
+  categoryChanged(event:any){
+    this.orderByCategories.forEach((category:any) => category.categoryChecked = false);
+    this.orderByCategories.filter((category:any) => category.categoryName == event).splice(0,1).forEach((category:any) => category.categoryChecked = true);
+    this.providerInfoList = this.orderProviderList();
+  }
 
   dynamicSort(property: any) {
     var sortOrder = 1;
@@ -183,55 +167,33 @@ export class AppComponent {
     }
   }
 
-  initializeFields(){
-  return [
-    {
-      fieldOrder: 1,
-      fieldLabel: "Provider Name",
-      fieldValue: ""
-    },
-    {
-      fieldOrder: 2,
-      fieldLabel: "Provider Business Name",
-      fieldValue: ""
-    },
-    {
-      fieldOrder: 3,
-      fieldLabel: "Provider N.I.T.",
-      fieldValue: ""
-    },
-    {
-      fieldOrder: 4,
-      fieldLabel: "Provider Address",
-      fieldValue: ""
-    },
-    {
-      fieldOrder: 5,
-      fieldLabel: "Provider Phone Number",
-      fieldValue: ""
-    },
-    {
-      fieldOrder: 6,
-      fieldLabel: "Provider Rating Number",
-      fieldValue: ""
-    }
-  ];
-  }
-
   saveProvider(nameInput:any,businessNameInput:any,nitInput:any,addressInput:any,phoneNumberInput:any,ratingNumberInput:any){
 
     var nextOrder =  this.providerInfoList.sort(this.dynamicSort("-providerOrder"))[0].providerOrder + 1;
-    this.providerInfoList = this.providerInfoList.concat({
-        providerOrder: nextOrder,
-        providerName: nameInput,
-        providerBusinessName: businessNameInput,
-        providerNit: nitInput,
-        providerRatingNumber: ratingNumberInput,
-        providerAddress: addressInput,
-        providerPhoneNumber: phoneNumberInput,
-        providerCreationDate: (new Date()).toISOString().split('T')[0],
-        providerLastModificationDate: ""
-    });
+    var newProvider = {
+      providerOrder: nextOrder,
+      providerName: nameInput,
+      providerBusinessName: businessNameInput,
+      providerNIT: nitInput,
+      providerRatingNumber: ratingNumberInput,
+      providerAddress: addressInput,
+      providerPhoneNumber: phoneNumberInput,
+      providerCreationDate: (new Date()).toISOString().split('T')[0],
+      providerLastModificationDate: ""
+    };
+    if(this.validateInformation(newProvider)){
+      this.providerService.saveProvider(newProvider)
+      .subscribe((data: any) =>{
+            console.log(data);
+            newProvider.providerRatingNumber = (+newProvider.providerRatingNumber).toFixed(1).toString();
+            this.providerInfoList = this.providerInfoList.concat(newProvider);
+            this.creatingProvider = false;
+          },
+          (error:any) => alert("Ocurrio un error insertando en el servidor."));
+    }
+    else{
+      alert('Validate the information you provided and try again.')
+    }
 
     nameInput = "";
     businessNameInput = "";
@@ -240,24 +202,37 @@ export class AppComponent {
     phoneNumberInput = "";
     ratingNumberInput = "";
 
-    this.creatingProvider = false;
   }
 
-  updateProvider(orderInputEdit:any,creationDateInputEdit:any,nameInputEdit:any,businessNameInputEdit:any,nitInputEdit:any,addressInputEdit:any,phoneNumberInputEdit:any,ratingNumberInputEdit:any){
+  updateProvider(idInputEdit:any,orderInputEdit:any,creationDateInputEdit:any,nameInputEdit:any,businessNameInputEdit:any,nitInputEdit:any,addressInputEdit:any,phoneNumberInputEdit:any,ratingNumberInputEdit:any){
 
     var orderToEdit =  parseInt(orderInputEdit);
-    this.providerInfoList = this.providerInfoList.filter(provider => provider.providerOrder != orderToEdit)
-    this.providerInfoList = this.providerInfoList.concat({
+    this.providerInfoList = this.providerInfoList.filter((provider:any) => provider.providerOrder != orderToEdit)
+    var updateProvider = {
+        providerId: idInputEdit,
         providerOrder: orderToEdit,
         providerName: nameInputEdit,
         providerBusinessName: businessNameInputEdit,
-        providerNit: nitInputEdit,
+        providerNIT: nitInputEdit,
         providerRatingNumber: ratingNumberInputEdit,
         providerAddress: addressInputEdit,
         providerPhoneNumber: phoneNumberInputEdit,
         providerCreationDate: creationDateInputEdit,
         providerLastModificationDate: (new Date()).toISOString().split('T')[0]
-    });
+    };
+    if(this.validateInformation(updateProvider)){
+      this.providerService.updateProvider(updateProvider)
+      .subscribe((data: any) =>{
+            console.log(data);
+            updateProvider.providerRatingNumber = (+updateProvider.providerRatingNumber).toFixed(1).toString();
+            this.providerInfoList = this.providerInfoList.concat(updateProvider);
+            this.editingProvider = false;
+          },
+          (error:any) => alert("Ocurrio un error actualizando en el servidor."));
+    }
+    else{
+      alert('Validate the information you provided and try again.')
+    }
 
     orderInputEdit = "";
     creationDateInputEdit = "";
@@ -268,57 +243,139 @@ export class AppComponent {
     phoneNumberInputEdit = "";
     ratingNumberInputEdit = "";
 
-    this.editingProvider = false;
   }
 
   editProvider(event:any){
     this.editingProvider = true;
-    var providerToEdit = this.providerInfoList.filter(provider => provider.providerName == event).splice(0,1)[0];
-    this.fields = [
+    console.log(this.providerInfoList);
+    var providerToEdit = this.providerInfoList.filter((provider:any) => provider.providerName == event).splice(0,1)[0];
+    this.fields = this.getFieldsValues(providerToEdit);
+  }
+
+  getFieldsValues(providerToEdit: any){
+    return [
       {
-        fieldOrder: 1,
+        fieldOrder: 0,
         fieldLabel: "Provider Name",
         fieldValue: providerToEdit.providerName
       },
       {
-        fieldOrder: 2,
+        fieldOrder: 1,
         fieldLabel: "Provider Business Name",
         fieldValue: providerToEdit.providerBusinessName
       },
       {
-        fieldOrder: 3,
+        fieldOrder: 2,
         fieldLabel: "Provider N.I.T.",
-        fieldValue: providerToEdit.providerNit
+        fieldValue: providerToEdit.providerNIT
       },
       {
-        fieldOrder: 4,
+        fieldOrder: 3,
         fieldLabel: "Provider Address",
         fieldValue: providerToEdit.providerAddress
       },
       {
-        fieldOrder: 5,
+        fieldOrder: 4,
         fieldLabel: "Provider Phone Number",
         fieldValue: providerToEdit.providerPhoneNumber
       },
       {
-        fieldOrder: 6,
+        fieldOrder: 5,
         fieldLabel: "Provider Rating Number",
         fieldValue: providerToEdit.providerRatingNumber
       },
       {
-        fieldOrder: 7,
+        fieldOrder: 6,
         fieldLabel: "Provider Order",
         fieldValue: providerToEdit.providerOrder.toString()
       },
       {
-        fieldOrder: 8,
+        fieldOrder: 7,
         fieldLabel: "Provider Creation Date",
         fieldValue: providerToEdit.providerCreationDate
+      },
+      {
+        fieldOrder: 8,
+        fieldLabel: "Provider ID",
+        fieldValue: providerToEdit.providerID
       }
     ];
   }
 
   deleteProvider(event:any){
-    this.providerInfoList = this.providerInfoList.filter(provider => provider.providerName != event);
+    var id = this.providerInfoList.filter((provider:any) => provider.providerName == event).splice(0,1)[0].providerID;
+    this.providerService.deleteProvider(id)
+    .subscribe((data: any) =>
+          console.log(data)
+        );
+    this.providerInfoList = this.providerInfoList.filter((provider:any) => provider.providerName != event);
+  }
+
+  validateInformation(providerInfo:any){
+    console.log(providerInfo.providerName);
+    console.log(providerInfo.providerName.length);
+    if(providerInfo.providerName.length == 0){
+      alert("The name must not be empty.");
+      return false;
+    }
+    if(providerInfo.providerName.length > 100){
+      alert("The name must not have more than 100 caracters.");
+      return false;
+    }
+    if(this.providerInfoList.filter((provider:any) => provider.providerName == providerInfo.providerName).length > 0){
+      alert("The name can not be repeated.");
+      return false;
+    }
+    if(providerInfo.providerBusinessName.length == 0){
+      alert("The business name must not be empty.");
+      return false;
+    }
+    if(providerInfo.providerBusinessName.length > 100){
+      alert("The business name must not have more than 100 caracters.");
+      return false;
+    }
+    if(providerInfo.providerNIT.length == 0){
+      alert("The NIT must not be empty.");
+      return false;
+    }
+    if(providerInfo.providerNIT.length > 11){
+      alert("The NIT must not have more than 11 caracters.");
+      return false;
+    }
+    if(providerInfo.providerAddress.length == 0){
+      alert("The business name must not be empty.");
+      return false;
+    }
+    if(providerInfo.providerAddress.length > 200){
+      alert("The business name must not have more than 200 caracters.");
+      return false;
+    }
+    if(providerInfo.providerPhoneNumber.length == 0){
+      alert("The phone number must not be empty.");
+      return false;
+    }
+    if(providerInfo.providerPhoneNumber.length > 15){
+      alert("The phone number must not have more than 15 caracters.");
+      return false;
+    }
+    if(providerInfo.providerRatingNumber.length == 0){
+      alert("The rating number must not be empty.");
+      return false;
+    }
+    if(this.validateRatingNumber(providerInfo.providerRatingNumber)){
+      alert("The rating number must a value between 0 and 5.");
+      return false;
+    }
+    console.log(+providerInfo.providerRatingNumber);
+    if(!((+providerInfo.providerRatingNumber) >= 0 && (+providerInfo.providerRatingNumber) <= 5 )) {
+      alert("The rating number must a value between 0 and 5.");
+      return false;
+    }
+    return true;
+  }
+
+  validateRatingNumber(s: any) {
+    var rgx = /^[0-9]*\.\,?[0-9]*$/;
+    return s.match(rgx) == null;
   }
 }
