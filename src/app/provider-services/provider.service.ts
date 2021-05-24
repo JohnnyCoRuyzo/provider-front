@@ -7,7 +7,7 @@ import { Provider } from '../provider-interface/provider';
 @Injectable()
 export class ProviderService {
   
-  private production = false;
+  private production = true;
   private urlApiWeb = (this.production)?'http://provider-web-api.gear.host':'https://localhost:44301';
   private urlFrontEnd = (this.production)? 'https://provider-info-front.netlify.app':'http://localhost:4200';
 
