@@ -8,7 +8,7 @@ import { Provider } from '../provider-interface/provider';
 export class ProviderService {
   
   private production = true;
-  private urlApiWeb = (this.production)?'http://provider-web-api.gear.host':'https://localhost:44301';
+  private urlApiWeb = (this.production)?'https://provider-web-api.gear.host':'https://localhost:44301';
   private urlFrontEnd = (this.production)? 'https://provider-info-front.netlify.app':'http://localhost:4200';
 
   constructor(private http: HttpClient) { }
